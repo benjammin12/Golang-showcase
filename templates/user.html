@@ -3,7 +3,11 @@
 
 <div class="container">
     <h2>{{.}}</h2>
-    <div id="task-list">
+    <div id="tasks">
+        <ul class="task-list">
+
+
+        </ul>
 
     </div>
 </div>
@@ -20,11 +24,11 @@
             type:"GET",
             success:function(resp){
                 var jsonResp = JSON.parse(resp)
-                var tasks = $('#task-list');
-                tasks.empty()
+                var tasks = $('.task-list');
+                tasks.empty();
 
                 jsonResp.forEach(function(value){
-                    var task = $("<p value=" + value.TaskId + ">" + value.TaskName + ":::" + value.TaskDesc +  "</p>")
+                    var task = $("<li value=" + value.TaskId + ">" + value.TaskName + ":::" + value.TaskDesc +  "</li>")
                     tasks.append(task)
                 });
             }

@@ -54,3 +54,9 @@ body, html {
     color: red;
     font-size: 20px;
 }
+
+.task-list li {
+    color: gray;
+    font-family: serif;
+    font-size: 18px;
+}
