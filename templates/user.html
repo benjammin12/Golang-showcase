@@ -3,7 +3,33 @@
 
 <div class="container">
     <h2>{{.}}</h2>
+    <div id="task-list">
+
+    </div>
 </div>
 
+<script>
+    $( document ).ready(function() {
+
+        getAllTasks();
+    });
+
+    function getAllTasks() {
+        $.ajax({
+            url:"/tasks",
+            type:"GET",
+            success:function(resp){
+                var jsonResp = JSON.parse(resp)
+                var tasks = $('#task-list');
+                tasks.empty()
+
+                jsonResp.forEach(function(value){
+                    var task = $("<p value=" + value.TaskId + ">" + value.TaskName + ":::" + value.TaskDesc +  "</p>")
+                    tasks.append(task)
+                });
+            }
+        })
+    }
+</script>
 {{template "end"}}
 {{end}}

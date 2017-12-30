@@ -50,6 +50,8 @@ func main(){
 	r.HandleFunc("/login", loginPage).Methods("GET")
 	r.HandleFunc("/login", loginUser).Methods("POST")
 	r.HandleFunc("/user", userPage).Methods("GET")
+	r.HandleFunc("/tasks", GetTasks).Methods("GET")
+
 
 	r.HandleFunc("/seed", addUser)
 
@@ -70,7 +72,6 @@ func CheckLoginStatus(w http.ResponseWriter, r *http.Request) (bool,interface{})
 		uID := sess_uid
 		name := sess.Get("username")
 		fmt.Println("Logged in User, ", uID)
-		fmt.Println("Name is ", name)
 		//Tpl.ExecuteTemplate(w, "user", nil)
 		return true,name
 	}
@@ -133,7 +134,7 @@ func loginUser(w http.ResponseWriter, r *http.Request){
 		return
 	} else { //Login was sucessful, create session and cookie
 		u1 := user_id
-		sess.Set("username", r.Form["username"])
+		sess.Set("username", r.Form["email"])
 		sess.Set("UserID", u1)
 		http.Redirect(w,r, "/user", http.StatusSeeOther)
 		//templ.ExecuteTemplate(w, "userHome", "Welcome " + databaseUserName)
