@@ -29,7 +29,7 @@ func GetTasks(w http.ResponseWriter, r *http.Request){
 	rows, _ := db.Query("SELECT * FROM tasks")
 
 	for rows.Next(){
-		if rows.Scan(&t_id,t_name,t_info) ; err != nil{
+		if rows.Scan(&t_id,&t_name,&t_info) ; err != nil{
 			log.Fatalln(err.Error())
 		}
 
