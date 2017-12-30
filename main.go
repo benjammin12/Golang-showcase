@@ -3,13 +3,14 @@ package main
 import (
 	"net/http"
 	"fmt"
-	"prog-assignment-golang-heroku/session"
-	_ "prog-assignment-golang-heroku/memory"
+
 	"html/template"
 	"os"
 	"golang.org/x/crypto/bcrypt"
 	_ "github.com/lib/pq"
 	"database/sql"
+	"prog-assignment-golang-heroku/session"
+	_ "prog-assignment-golang-heroku/memory"
 	"log"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/handlers"

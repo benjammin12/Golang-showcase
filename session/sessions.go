@@ -12,7 +12,6 @@ import (
 )
 
 var provides = make(map[string]Provider)
-var globalSessions *Manager
 type Manager struct {
 	cookieName  string     //private cookiename
 	lock        sync.Mutex // protects session
@@ -107,6 +106,9 @@ func (manager *Manager) GC() {
 	time.AfterFunc(time.Duration(manager.maxlifetime), func() { manager.GC() })
 }
 
-//func init() {
-//	globalSessions,_ = NewManager("memory","gosessionid",3600)
-//}
+var globalSessions *Manager
+
+
+func init() {
+	globalSessions,_ = NewManager("memory","gosessionid",3600)
+}
