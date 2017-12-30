@@ -8,10 +8,11 @@ import (
 	"os"
 	"golang.org/x/crypto/bcrypt"
 	"github.com/satori/go.uuid"
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 	"database/sql"
 	"log"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/handlers"
 )
 
 var (
@@ -22,22 +23,22 @@ var (
 )
 
 func init(){
-	//globalSessions, _ = session.NewManager("memory", "gosessionid", 3600)
-	//go globalSessions.GC()
-	connectionName := mustGetenv("CLOUDSQL_CONNECTION_NAME")
-	userName := mustGetenv("CLOUDSQL_USER")
-	password := os.Getenv("CLOUDSQL_PASSWORD")
-
-
-	Db, err = sql.Open("mysql", fmt.Sprintf("%s:%s@cloudsql(%s)/Tasks", userName, password, connectionName))
+	//port := os.Getenv("PORT")
+	//http.HandleFunc("/admin/addCar" , addCar)
+	Db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
-		fmt.Println("Connection failed")
-		fmt.Println(err.Error())
-		return
+		log.Fatalln(err)
 	}else {
-		fmt.Println("Connection okay")
+		fmt.Println("Connected to Db")
 	}
-	Templ = template.Must(template.ParseGlob("templates/*"))
+
+}
+
+
+func main(){
+
+	globalSessions, _ = session.NewManager("memory", "gosessionid", 3600)
+	go globalSessions.GC()
 
 
 	r := mux.NewRouter()
@@ -48,8 +49,9 @@ func init(){
 	r.HandleFunc("/login", loginUser).Methods("POST")
 	r.HandleFunc("/seed", addUser)
 
+	http.ListenAndServe(":" + os.Getenv("PORT"),handlers.LoggingHandler(os.Stdout,r))
+
 	//used for GAE to pick up routes
-	http.Handle("/", r)
 
 	/* USER
 	+----------+--------------+------+-----+---------+----------------+
@@ -137,13 +139,7 @@ func loginUser(w http.ResponseWriter, r *http.Request){
 	}
 }
 
-func mustGetenv(k string) string {
-	v := os.Getenv(k)
-	if v == "" {
-		log.Panicf("%s environment variable not set.", k)
-	}
-	return v
-}
+
 
 func addUser(w http.ResponseWriter, r *http.Request) {
 	userName := "cull@example.com"
@@ -153,7 +149,7 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	_, err = Db.Exec("INSERT INTO admin (name,password) values ($1,$2)",userName,hash)
+	_, err = Db.Exec("INSERT INTO main_user (name,password) values ($1,$2)",userName,hash)
 
 	if err != nil {
 		log.Fatalln(err)
