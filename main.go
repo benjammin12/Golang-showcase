@@ -18,17 +18,16 @@ import (
 var (
 	//globalSessions *session.Manager
 	err error
-	Templ *template.Template
-	Db *sql.DB
+	templ *template.Template
+	db *sql.DB
 )
 
 func init(){
 	//globalSessions, _ = session.NewManager("memory", "gosessionid", 3600)
 	//go globalSessions.GC()
 
-	//port := os.Getenv("PORT")
-	//http.HandleFunc("/admin/addCar" , addCar)
-	Db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+
+	db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatalln(err)
 	}else {
@@ -40,7 +39,7 @@ func init(){
 
 func main(){
 
-	Templ = template.Must(template.ParseGlob("templates/*"))
+	templ = template.Must(template.ParseGlob("templates/*"))
 
 
 	r := mux.NewRouter()
@@ -94,14 +93,14 @@ func main(){
 //}
 
 func index(w http.ResponseWriter, r *http.Request){
-	err := Templ.ExecuteTemplate(w, "index", nil)
+	err := templ.ExecuteTemplate(w, "index", nil)
 	if err != nil {
 		fmt.Print(err.Error())
 	}
 }
 
 func loginPage(w http.ResponseWriter, r *http.Request){
-	err := Templ.ExecuteTemplate(w, "login", nil)
+	err := templ.ExecuteTemplate(w, "login", nil)
 	if err != nil {
 		fmt.Print(err.Error())
 	}
@@ -151,7 +150,7 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	_, err = Db.Exec("INSERT INTO main_user (name,password) values ($1,$2)",userName,hash)
+	_, err = db.Exec("INSERT INTO main_user (name,password) values ($1,$2)",userName,hash)
 
 	if err != nil {
 		log.Fatalln(err)
