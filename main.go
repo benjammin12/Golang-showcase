@@ -55,26 +55,6 @@ func main(){
 
 	//used for GAE to pick up routes
 
-	/* USER
-	+----------+--------------+------+-----+---------+----------------+
-	| Field    | Type         | Null | Key | Default | Extra          |
-	+----------+--------------+------+-----+---------+----------------+
-	| id       | int(11)      | NO   | PRI | NULL    | auto_increment |
-	| name     | varchar(255) | NO   |     | NULL    |                |
-	| password | varchar(255) | NO   |     | NULL    |                |
-	+----------+--------------+------+-----+---------+----------------+
-	*/
-
-	/*TASKS
-	+-----------+--------------+------+-----+---------+----------------+
-	| Field     | Type         | Null | Key | Default | Extra          |
-	+-----------+--------------+------+-----+---------+----------------+
-	| id        | int(11)      | NO   | PRI | NULL    | auto_increment |
-	| task_name | varchar(255) | NO   |     | NULL    |                |
-	| task_desc | text         | YES  |     | NULL    |                |
-	+-----------+--------------+------+-----+---------+----------------+
-	 */
-
 
 }
 //func CheckLoginStatus(w http.ResponseWriter, r *http.Request) (bool){
@@ -115,16 +95,18 @@ func loginUser(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	username := r.FormValue("name")
+	username := r.FormValue("email")
 	password := r.FormValue("password")
+
+
 
 	var user_id int
 	var databaseUserName, databasePassword string
 
-	err := db.QueryRow("SELECT * FROM main_user WHERE name=?", username).Scan(&user_id,&databaseUserName, &databasePassword)
+	err := db.QueryRow("SELECT * FROM main_user WHERE user_email=?", username).Scan(&user_id,&databaseUserName, &databasePassword)
 	//no user found
 	if err != nil {
-		templ.ExecuteTemplate(w, "login" ,"Username and Password did not match! Please try again")
+		templ.ExecuteTemplate(w, "login" ,"No user in db")
 		return
 	}
 
@@ -137,7 +119,7 @@ func loginUser(w http.ResponseWriter, r *http.Request){
 		u1 := user_id
 		sess.Set("username", r.Form["username"])
 		sess.Set("UserID", u1)
-		templ.ExecuteTemplate(w, "adminHome", nil)
+		templ.ExecuteTemplate(w, "userHome", "Welcome " + databaseUserName)
 		return
 	}
 }

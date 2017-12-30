@@ -49,3 +49,8 @@ body, html {
     font-family: serif;
     text-align: center;
 }
+
+.login-error {
+    color: red;
+    font-size: 20px;
+}
