@@ -58,5 +58,15 @@ body, html {
 .task-list li {
     color: gray;
     font-family: serif;
-    font-size: 18px;
+    font-size: 20px;
+}
+
+.user-page h2 {
+    text-align: center;
+}
+
+#tasks p {
+    color: black;
+    font-family: serif;
+    font-size: 25px;
 }
