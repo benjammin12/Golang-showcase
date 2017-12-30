@@ -62,7 +62,6 @@ func main(){
 func CheckLoginStatus(w http.ResponseWriter, r *http.Request) (bool,interface{}){
 	sess := globalSessions.SessionStart(w,r)
 	sess_uid := sess.Get("UserID")
-	//u := model.MainUser{}
 	if sess_uid == nil {
 		http.Redirect(w,r, "/", http.StatusForbidden)
 		//Tpl.ExecuteTemplate(w,"index", "You can't access this page")
@@ -71,6 +70,7 @@ func CheckLoginStatus(w http.ResponseWriter, r *http.Request) (bool,interface{})
 		uID := sess_uid
 		name := sess.Get("username")
 		fmt.Println("Logged in User, ", uID)
+		fmt.Println("Name is ", name)
 		//Tpl.ExecuteTemplate(w, "user", nil)
 		return true,name
 	}
