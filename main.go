@@ -103,9 +103,9 @@ func loginUser(w http.ResponseWriter, r *http.Request){
 	var user_id int
 	var databaseUserName, databasePassword string
 
-	err := db.QueryRow("SELECT * FROM main_user WHERE user_email=?", username).Scan(&user_id,&databaseUserName, &databasePassword)
+	row := db.QueryRow("SELECT * FROM main_user WHERE user_email = $1 ", username).Scan(&user_id,&databaseUserName, &databasePassword)
 	//no user found
-	if err != nil {
+	if row != nil {
 		templ.ExecuteTemplate(w, "login" ,"No user in db")
 		return
 	}
