@@ -3,11 +3,11 @@ package main
 import (
 	"net/http"
 	"fmt"
-	"prog-assignment-golang/session"
+	//"prog-assignment-golang/session"
 	"html/template"
 	"os"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/satori/go.uuid"
+	//"github.com/satori/go.uuid"
 	_ "github.com/lib/pq"
 	"database/sql"
 	"log"
