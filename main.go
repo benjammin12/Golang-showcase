@@ -150,7 +150,7 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	_, err = db.Exec("INSERT INTO main_user (name,password) values ($1,$2)",userName,hash)
+	_, err = db.Exec("INSERT INTO main_user (user_email,user_password) values ($1,$2)",userName,hash)
 
 	if err != nil {
 		log.Fatalln(err)
