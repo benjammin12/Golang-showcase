@@ -1,0 +1,48 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "Yi7+P8UCCOlHzzpWEN0U2nlGvz0=",
+			"path": "github.com/go-sql-driver/mysql",
+			"revision": "8fefef06da7707b5a3cda42195a6b409c9c9ab5c",
+			"revisionTime": "2017-06-16T13:16:31Z"
+		},
+		{
+			"checksumSHA1": "WIvWaiiXRPEUqg4CaR/iD5sZI/E=",
+			"path": "github.com/gorilla/context",
+			"revision": "08b5f424b9271eedf6f9f0ce86cb9396ed337a42",
+			"revisionTime": "2016-08-17T18:46:32Z"
+		},
+		{
+			"checksumSHA1": "D1BVROe0MVJEDgm++mv1iVQ6+80=",
+			"path": "github.com/gorilla/mux",
+			"revision": "8c683ee571b6ee7ffc9f1cafd13103c422e71cbf",
+			"revisionTime": "2017-06-21T21:27:26Z"
+		},
+		{
+			"checksumSHA1": "zmC8/3V4ls53DJlNTKDZwPSC/dA=",
+			"path": "github.com/satori/go.uuid",
+			"revision": "5bf94b69c6b68ee1b541973bb8e1144db23a194b",
+			"revisionTime": "2017-03-21T23:07:31Z"
+		},
+		{
+			"checksumSHA1": "UWjVYmoHlIfHzVIskELHiJQtMOI=",
+			"path": "golang.org/x/crypto/bcrypt",
+			"revision": "adbae1b6b6fb4b02448a0fc0dbbc9ba2b95b294d",
+			"revisionTime": "2017-06-19T06:03:41Z"
+		},
+		{
+			"checksumSHA1": "JsJdKXhz87gWenMwBeejTOeNE7k=",
+			"path": "golang.org/x/crypto/blowfish",
+			"revision": "adbae1b6b6fb4b02448a0fc0dbbc9ba2b95b294d",
+			"revisionTime": "2017-06-19T06:03:41Z"
+		},
+		{
+			"checksumSHA1": "pOzDCwy16E8GuxA/rTVjVJzLmfA=",
+			"path": "prog-assignment-golang/session",
+			"revision": ""
+		}
+	],
+	"rootPath": "prog-assignment-golang-heroku"
+}

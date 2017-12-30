@@ -1,0 +1,51 @@
+
+body, html {
+    height: 100%;
+    margin: 0;
+    max-width: 100%;
+}
+.bg {
+    /* The image used */
+    background-image: url(../public/skate.JPG);
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar {
+    margin: 0;
+    padding: 0;
+}
+
+.unauthorized {
+    margin-top: 25px;
+    color: red;
+    font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.login-form {
+    background-color: grey;
+    padding: 20px;
+    display: block;
+    margin: 0 auto;
+    width: 600px;
+    max-width: 100%;
+}
+
+/*#login-form {*/
+    /*height:100%;*/
+    /*background-image: url(../public/skate.JPG);*/
+    /*background-position: center;*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+/*}*/
+
+#login-form h2{
+    font-family: serif;
+    text-align: center;
+}
