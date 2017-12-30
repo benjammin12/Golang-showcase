@@ -23,8 +23,8 @@ var (
 )
 
 func init(){
-	globalSessions, _ = session.NewManager("memory", "gosessionid", 3600)
-	go globalSessions.GC()
+	//globalSessions, _ = session.NewManager("memory", "gosessionid", 3600)
+	//go globalSessions.GC()
 
 	//port := os.Getenv("PORT")
 	//http.HandleFunc("/admin/addCar" , addCar)
