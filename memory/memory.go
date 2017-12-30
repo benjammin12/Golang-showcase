@@ -4,7 +4,7 @@ import (
 	"container/list"
 	"sync"
 	"time"
-	"prog-assignment-golang/session"
+	"prog-assignment-golang-heroku/session"
 )
 
 var pder = &Provider{list: list.New()}
