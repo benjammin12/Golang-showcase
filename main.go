@@ -49,6 +49,8 @@ func main(){
 	r.HandleFunc("/", index)
 	r.HandleFunc("/login", loginPage).Methods("GET")
 	r.HandleFunc("/login", loginUser).Methods("POST")
+	r.HandleFunc("/user", userPage).Methods("GET")
+
 	r.HandleFunc("/seed", addUser)
 
 	http.ListenAndServe(":" + os.Getenv("PORT"),handlers.LoggingHandler(os.Stdout,r))
@@ -57,21 +59,22 @@ func main(){
 
 
 }
-//func CheckLoginStatus(w http.ResponseWriter, r *http.Request) (bool){
-//	sess := globalSessions.SessionStart(w,r)
-//	sess_uid := sess.Get("UserID")
-//	//u := model.MainUser{}
-//	if sess_uid == nil {
-//		//http.Redirect(w,r, "/", http.StatusForbidden)
-//		//Tpl.ExecuteTemplate(w,"index", "You can't access this page")
-//		return false
-//	} else {
-//		uID := sess_uid
-//		fmt.Println("Logged in User, ", uID)
-//		//Tpl.ExecuteTemplate(w, "user", nil)
-//		return true
-//	}
-//}
+func CheckLoginStatus(w http.ResponseWriter, r *http.Request) (bool,interface{}){
+	sess := globalSessions.SessionStart(w,r)
+	sess_uid := sess.Get("UserID")
+	//u := model.MainUser{}
+	if sess_uid == nil {
+		http.Redirect(w,r, "/", http.StatusForbidden)
+		//Tpl.ExecuteTemplate(w,"index", "You can't access this page")
+		return false,""
+	} else {
+		uID := sess_uid
+		name := sess.Get("username")
+		fmt.Println("Logged in User, ", uID)
+		//Tpl.ExecuteTemplate(w, "user", nil)
+		return true,name
+	}
+}
 
 func index(w http.ResponseWriter, r *http.Request){
 	err := templ.ExecuteTemplate(w, "index", nil)
@@ -84,6 +87,19 @@ func loginPage(w http.ResponseWriter, r *http.Request){
 	err := templ.ExecuteTemplate(w, "login", nil)
 	if err != nil {
 		fmt.Print(err.Error())
+	}
+}
+
+func userPage(w http.ResponseWriter, r *http.Request){
+	isLogged, name := CheckLoginStatus(w,r)
+
+	if isLogged {
+		err := templ.ExecuteTemplate(w, "userHome", name)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	} else {
+		http.Redirect(w,r,"/",http.StatusUnauthorized)
 	}
 }
 
@@ -119,7 +135,8 @@ func loginUser(w http.ResponseWriter, r *http.Request){
 		u1 := user_id
 		sess.Set("username", r.Form["username"])
 		sess.Set("UserID", u1)
-		templ.ExecuteTemplate(w, "userHome", "Welcome " + databaseUserName)
+		http.Redirect(w,r, "/user", http.StatusSeeOther)
+		//templ.ExecuteTemplate(w, "userHome", "Welcome " + databaseUserName)
 		return
 	}
 }
