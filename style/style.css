@@ -37,14 +37,6 @@ body, html {
     max-width: 100%;
 }
 
-/*#login-form {*/
-    /*height:100%;*/
-    /*background-image: url(../public/skate.JPG);*/
-    /*background-position: center;*/
-    /*background-repeat: no-repeat;*/
-    /*background-size: cover;*/
-/*}*/
-
 #login-form h2{
     font-family: serif;
     text-align: center;
@@ -69,6 +61,10 @@ body, html {
     color: black;
     font-family: serif;
     font-size: 25px;
+}
+
+.push-footer {
+    margin-top: 250px;
 }
 
 .footer {
