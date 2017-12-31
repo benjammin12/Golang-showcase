@@ -55,12 +55,8 @@ func main(){
 	r.HandleFunc("/unauthorized", unauthorized)
 
 
-
-	//r.HandleFunc("/seed", addUser)
-
 	http.ListenAndServe(":" + os.Getenv("PORT"),handlers.LoggingHandler(os.Stdout,r))
 
-	//used for GAE to pick up routes
 
 
 }
@@ -152,20 +148,3 @@ func loginUser(w http.ResponseWriter, r *http.Request){
 	}
 }
 
-
-
-func addUser(w http.ResponseWriter, r *http.Request) {
-	userName := "cull@example.com"
-	hash, err := bcrypt.GenerateFromPassword([]byte("makethefuture"), bcrypt.DefaultCost)
-	if err != nil {
-		// TODO: Properly handle error
-		log.Fatal(err)
-	}
-
-	_, err = db.Exec("INSERT INTO main_user (user_email,user_password) values ($1,$2)",userName,hash)
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-}
