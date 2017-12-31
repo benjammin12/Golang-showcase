@@ -83,12 +83,13 @@
             },
             success:function () {
                 console.log("Task added");
-                $('#task-name').text("");
-                $('#task-info').text("");
                 //reload tasks
                 getAllTasks();
             }
-        })
+        });
+
+        $('#task-name').text("");
+        $('#task-info').text("");
     }
 </script>
 
