@@ -51,9 +51,11 @@ func main(){
 	r.HandleFunc("/login", loginUser).Methods("POST")
 	r.HandleFunc("/user", userPage).Methods("GET")
 	r.HandleFunc("/tasks", GetTasks).Methods("GET")
+	r.HandleFunc("/tasks", AddTask).Methods("POST")
 
 
-	r.HandleFunc("/seed", addUser)
+
+	//r.HandleFunc("/seed", addUser)
 
 	http.ListenAndServe(":" + os.Getenv("PORT"),handlers.LoggingHandler(os.Stdout,r))
 

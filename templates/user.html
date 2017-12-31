@@ -4,7 +4,7 @@
 <div class="container user-page">
     <h2>Welcome to the page of tasks {{.}}</h2>
     <div id="tasks">
-        <p>Here's all your tasks</p>
+        <p>Here's a list of tasks which are assigned to random employees for the site</p>
         <hr>
         <ul class="task-list">
         </ul>
@@ -13,8 +13,13 @@
     <h3>Want to add a new task?</h3>
     <button type="button" class="btn btn-info" id="show-task-form">Add New Task</button><br>
     <div id="task-form">
-        <input type="text" name="task-name" placeholder="Task Name"><br>
-        <textarea name="task-additional" placeholder="Additional Task Info"></textarea>
+
+        <label class="form-group">Task Name</label>
+        <input type="text" id="task-name" name="task-name" class="form-control" placeholder="Task Name"><br>
+
+        <label class="form-group">Additional Info</label>
+        <textarea name="task-additional" id="task-additional" class="form-control" placeholder="Additional Task Info"></textarea>
+
         <button type="button" id="submit-task" class="btn btn-primary">Submit</button>
     </div>
 </div>
@@ -34,6 +39,10 @@
         }
     });
 
+    $('#submit-task').on('click',function(){
+        addTask();
+    });
+
     function getAllTasks() {
         $.ajax({
             url:"/tasks",
@@ -47,6 +56,26 @@
                     var task = $("<li value=" + value.TaskId + ">" + value.TaskName + ":::" + value.TaskDesc +  "</li>")
                     tasks.append(task)
                 });
+            }
+        })
+    }
+
+    function addTask(){
+
+        var task_name = $('#task-name').val();
+        var task_info = $('#task-additional').val();
+
+        $.ajax({
+            url:"/tasks",
+            type:"POST",
+            data:{
+                name:task_name,
+                info:task_info,
+            },
+            success:function () {
+                console.log("Task added")
+                //reload tasks
+                getAllTasks();
             }
         })
     }

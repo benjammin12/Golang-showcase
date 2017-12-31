@@ -59,7 +59,7 @@ func AddTask(w http.ResponseWriter, r *http.Request){
 	fmt.Println("Task info",task_info)
 
 
-	_ ,err := db.Exec("INSERT INTO tasks ( name , add_info ) values(?,?)",task_name,task_info)
+	_ ,err := db.Exec("INSERT INTO tasks ( task_name , task_desc ) values ( $1 , $2 )",task_name,task_info)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
