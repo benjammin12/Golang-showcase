@@ -71,8 +71,33 @@ body, html {
     font-size: 25px;
 }
 
-.nav>li {
-    position: relative;
-    display: block;
-    margin-right: 20px;
+.footer {
+    position: absolute;
+    width: 100%;
+    background-color: #13171A;
+    color: floralwhite;
+}
+
+@media only screen and (max-width: 600px) {
+    .footer img {
+        height: 75px;
+        width: 75px;
+        display: block;
+        margin: 0 auto;
+    }
+    .footer {
+        text-align: center;
+    }
+}
+
+@media (min-width:600px) {
+    .footer img {
+        height: 105px;
+        width: 105px;
+        display: block;
+        margin: 0 auto;
+    }
+    .footer {
+        text-align: center;
+    }
 }
