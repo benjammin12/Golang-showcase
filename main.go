@@ -50,8 +50,11 @@ func main(){
 	r.HandleFunc("/login", loginPage).Methods("GET")
 	r.HandleFunc("/login", loginUser).Methods("POST")
 	r.HandleFunc("/user", userPage).Methods("GET")
-	r.HandleFunc("/tasks", GetTasks).Methods("GET")
-	r.HandleFunc("/tasks", AddTask).Methods("POST")
+
+	//check if the user is authenticated before adding/viewing tasks
+	r.Handle("/tasks", isAuthenticated(GetTasks)).Methods("GET")
+	r.Handle("/tasks", isAuthenticated(AddTask)).Methods("POST")
+
 	r.HandleFunc("/unauthorized", unauthorized)
 
 
@@ -146,5 +149,17 @@ func loginUser(w http.ResponseWriter, r *http.Request){
 		//templ.ExecuteTemplate(w, "userHome", "Welcome " + databaseUserName)
 		return
 	}
+}
+
+//custom middleware to check if the user is logged in before executing functions, meant to wrap other functions
+func isAuthenticated(next http.HandlerFunc) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			isLogged,_ := CheckLoginStatus(w, r)
+			if isLogged {
+				next.ServeHTTP(w,r)
+			}else {
+				http.Redirect(w,r,"/unauthorized",http.StatusSeeOther)
+			}
+		})
 }
 
