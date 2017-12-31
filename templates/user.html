@@ -19,7 +19,7 @@
         <label class="form-group">Additional Info</label>
         <textarea name="additional" id="task-additional" class="form-control" placeholder="Additional Task Info"></textarea><br>
 
-        <button type="button" id="submit-task" class="btn btn-primary">Submit</button><br>
+        <button type="button" id="submit-task" class="btn btn-primary pull-right">Submit</button><br>
         <div class="form-error"></div>
     </div>
 </div>
@@ -66,7 +66,8 @@
         var task_info = $('#task-additional').val();
 
         if (task_name === "" || task_info === ""){
-
+            $('.form-error').text("Both name name and additional info are required");
+            return false;
         }
 
         console.log("Task name  " + task_name);
