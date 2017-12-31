@@ -52,6 +52,7 @@ func main(){
 	r.HandleFunc("/user", userPage).Methods("GET")
 	r.HandleFunc("/tasks", GetTasks).Methods("GET")
 	r.HandleFunc("/tasks", AddTask).Methods("POST")
+	r.HandleFunc("/unauthorized", unauthorized)
 
 
 
@@ -67,7 +68,7 @@ func CheckLoginStatus(w http.ResponseWriter, r *http.Request) (bool,interface{})
 	sess := globalSessions.SessionStart(w,r)
 	sess_uid := sess.Get("UserID")
 	if sess_uid == nil {
-		http.Redirect(w,r, "/", http.StatusForbidden)
+		//http.Redirect(w,r, "/unauthorized", http.StatusForbidden)
 		//Tpl.ExecuteTemplate(w,"index", "You can't access this page")
 		return false,""
 	} else {
@@ -88,6 +89,13 @@ func index(w http.ResponseWriter, r *http.Request){
 
 func loginPage(w http.ResponseWriter, r *http.Request){
 	err := templ.ExecuteTemplate(w, "login", nil)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+}
+
+func unauthorized(w http.ResponseWriter, r *http.Request){
+	err := templ.ExecuteTemplate(w, "unauthorized", "You must be a user to access that page.")
 	if err != nil {
 		fmt.Print(err.Error())
 	}
