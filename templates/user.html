@@ -7,17 +7,31 @@
         <p>Here's all your tasks</p>
         <hr>
         <ul class="task-list">
-
-
         </ul>
+    </div>
 
+    <h3>Want to add a new task?</h3>
+    <button type="button" class="btn btn-info" id="show-task-form">Add New Task</button><br>
+    <div id="task-form">
+        <input type="text" name="task-name" placeholder="Task Name"><br>
+        <textarea name="task-additional" placeholder="Additional Task Info"></textarea>
+        <button type="button" id="submit-task" class="btn btn-primary">Submit</button>
     </div>
 </div>
 
 <script>
     $( document ).ready(function() {
-
+        $("#task-form").hide();
         getAllTasks();
+    });
+
+    $('#show-task-form').on('click',function(){
+        if ($("#task-form").is(":visible")) {
+            $("#task-form").hide();
+        }else {
+            $("#task-form").show();
+
+        }
     });
 
     function getAllTasks() {
