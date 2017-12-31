@@ -52,6 +52,7 @@ func GetTasks(w http.ResponseWriter, r *http.Request){
 
 func AddTask(w http.ResponseWriter, r *http.Request){
 	fmt.Println("Adding task")
+
 	task_name := r.FormValue("task")
 	task_info := r.FormValue("info")
 
