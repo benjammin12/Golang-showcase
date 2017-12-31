@@ -15,10 +15,10 @@
     <div id="task-form">
 
         <label class="form-group">Task Name</label>
-        <input type="text" id="task-name" name="task-name" class="form-control" placeholder="Task Name"><br>
+        <input type="text" name="name" id="task-name"  class="form-control" placeholder="Task Name"><br>
 
         <label class="form-group">Additional Info</label>
-        <textarea name="task-additional" id="task-additional" class="form-control" placeholder="Additional Task Info"></textarea>
+        <textarea name="additional" id="task-additional" class="form-control" placeholder="Additional Task Info"></textarea>
 
         <button type="button" id="submit-task" class="btn btn-primary">Submit</button>
     </div>
@@ -64,6 +64,8 @@
 
         var task_name = $('#task-name').val();
         var task_info = $('#task-additional').val();
+
+        console.log("Task name  " + task_name);
 
         $.ajax({
             url:"/tasks",
