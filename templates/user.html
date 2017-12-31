@@ -12,15 +12,15 @@
 
     <h3>Want to add a new task?</h3>
     <button type="button" class="btn btn-info" id="show-task-form">Add New Task</button><br>
-    <div id="task-form">
-        &nbsp;&nbsp;
+    <div id="task-form"><br>
         <label class="form-group">Task Name</label>
         <input type="text" name="name" id="task-name"  class="form-control" placeholder="Task Name"><br>
 
         <label class="form-group">Additional Info</label>
-        <textarea name="additional" id="task-additional" class="form-control" placeholder="Additional Task Info"></textarea>
+        <textarea name="additional" id="task-additional" class="form-control" placeholder="Additional Task Info"></textarea><br>
 
-        <button type="button" id="submit-task" class="btn btn-primary">Submit</button>
+        <button type="button" id="submit-task" class="btn btn-primary">Submit</button><br>
+        <div class="form-error"></div>
     </div>
 </div>
 
@@ -61,9 +61,13 @@
     }
 
     function addTask(){
-
+        $('.form-error').text("");
         var task_name = $('#task-name').val();
         var task_info = $('#task-additional').val();
+
+        if (task_name === "" || task_info === ""){
+
+        }
 
         console.log("Task name  " + task_name);
 
