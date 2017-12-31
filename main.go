@@ -110,7 +110,7 @@ func userPage(w http.ResponseWriter, r *http.Request){
 			fmt.Println(err.Error())
 		}
 	} else {
-		http.Redirect(w,r,"/",http.StatusUnauthorized)
+		http.Redirect(w,r,"/unauthorized",http.StatusSeeOther)
 	}
 }
 
