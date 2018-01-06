@@ -19,6 +19,10 @@ type Manager struct {
 	maxlifetime int64
 }
 
+/* Used to control sessions
+ * Implementation is based off of https://astaxie.gitbooks.io
+ */
+
 //controls session features
 type Provider interface {
 	SessionInit(sid string) (Session, error)
@@ -85,19 +89,6 @@ func (manager *Manager) SessionStart(w http.ResponseWriter, r *http.Request) (se
 	return
 }
 
-//
-//func login(w http.ResponseWriter, r *http.Request) {
-//	sess := globalSessions.SessionStart(w, r)
-//	r.ParseForm()
-//	if r.Method == "GET" {
-//		t, _ := template.ParseFiles("login.gtpl")
-//		w.Header().Set("Content-Type", "text/html")
-//		t.Execute(w, sess.Get("username"))
-//	} else {
-//		sess.Set("username", r.Form["username"]) //is a POST
-//		http.Redirect(w, r, "/", 302)
-//	}
-//}
 
 func (manager *Manager) GC() {
 	manager.lock.Lock()

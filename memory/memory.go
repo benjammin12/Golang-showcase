@@ -7,6 +7,11 @@ import (
 	"prog-assignment-golang-heroku/session"
 )
 
+/* Used to control sessions in memory
+ * Implemented based off https://astaxie.gitbooks.io
+ * i.e set, get , delete sessions
+ */
+
 var pder = &Provider{list: list.New()}
 
 type SessionStore struct {

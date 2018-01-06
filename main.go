@@ -60,15 +60,16 @@ func main(){
 
 	http.ListenAndServe(":" + os.Getenv("PORT"),handlers.LoggingHandler(os.Stdout,r))
 
-
-
 }
+
+
+/*Helper function to check if the user is authenticated
+ * Returns an bool representing if the person is logged in and an interface representing their name
+ */
 func CheckLoginStatus(w http.ResponseWriter, r *http.Request) (bool,interface{}){
 	sess := globalSessions.SessionStart(w,r)
 	sess_uid := sess.Get("UserID")
 	if sess_uid == nil {
-		//http.Redirect(w,r, "/unauthorized", http.StatusForbidden)
-		//Tpl.ExecuteTemplate(w,"index", "You can't access this page")
 		return false,""
 	} else {
 		uID := sess_uid
@@ -79,6 +80,9 @@ func CheckLoginStatus(w http.ResponseWriter, r *http.Request) (bool,interface{})
 	}
 }
 
+/* Routes to home page
+ *
+ */
 func index(w http.ResponseWriter, r *http.Request){
 	err := templ.ExecuteTemplate(w, "index", nil)
 	if err != nil {
@@ -86,6 +90,9 @@ func index(w http.ResponseWriter, r *http.Request){
 	}
 }
 
+/* Routes to Login Page
+ *
+ */
 func loginPage(w http.ResponseWriter, r *http.Request){
 	err := templ.ExecuteTemplate(w, "login", nil)
 	if err != nil {
@@ -93,6 +100,9 @@ func loginPage(w http.ResponseWriter, r *http.Request){
 	}
 }
 
+/* Routes to unauthorized page if the user attempts to access the tasks without logging in
+ *
+ */
 func unauthorized(w http.ResponseWriter, r *http.Request){
 	err := templ.ExecuteTemplate(w, "unauthorized", "You must be a user to access that page.")
 	if err != nil {
@@ -100,6 +110,9 @@ func unauthorized(w http.ResponseWriter, r *http.Request){
 	}
 }
 
+/* Routes to user page upon successful login in
+ *
+ */
 func userPage(w http.ResponseWriter, r *http.Request){
 	isLogged, name := CheckLoginStatus(w,r)
 
@@ -113,6 +126,9 @@ func userPage(w http.ResponseWriter, r *http.Request){
 	}
 }
 
+/* Checks user credentials with that of the database
+ *
+ */
 func loginUser(w http.ResponseWriter, r *http.Request){
 	sess := globalSessions.SessionStart(w, r)
 
@@ -154,10 +170,10 @@ func loginUser(w http.ResponseWriter, r *http.Request){
 //custom middleware to check if the user is logged in before executing functions, meant to wrap other functions
 func isAuthenticated(next http.HandlerFunc) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			isLogged,_ := CheckLoginStatus(w, r)
-			if isLogged {
+			isLogged,_ := CheckLoginStatus(w, r) //first check if the user is logged in
+			if isLogged { //if they are serve the function inside
 				next.ServeHTTP(w,r)
-			}else {
+			}else { //otherwise redirect to the unauthorized page
 				http.Redirect(w,r,"/unauthorized",http.StatusSeeOther)
 			}
 		})
